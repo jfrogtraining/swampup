@@ -31,7 +31,7 @@ node ('swampup') {
         def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
         docker.build(tagName)
         rtDocker.push(tagName, REPO, buildInfo)
-        #rtServer.publishBuildInfo(buildInfo)
+//      rtServer.publishBuildInfo(buildInfo)
     }
 
     stage ('test') {
