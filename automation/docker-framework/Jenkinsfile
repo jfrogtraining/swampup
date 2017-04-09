@@ -6,19 +6,19 @@ node ('swampup') {
     def buildInfo = Artifactory.newBuildInfo()
     buildInfo.env.capture = true
 
-    stage ('Dependencies') {
-        dir ('docker-framework') {
+    stage('Dependencies') {
+        dir('automation/docker-framework') {
             try {
                 println "Gather Java and Tomcat"
 
-                def downloadFrameworkSpec = readFile "${env.WORKSPACE}/framework-download.json"
+                def downloadFrameworkSpec = readFile "${env.WORKSPACE}/automation/docker-framework/framework-download.json"
                 buildInfo = rtServer.download spec: downloadFrameworkSpec
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
                     println "Downloaded dependenices"
                 } else {
                     println "Missing Dependencies either jdk or tomcat - see listing below:"
                     sh 'ls -d */*'
-                    throw new FileNotFoundException ("Missing Dependencies")
+                    throw new FileNotFoundException("Missing Dependencies")
                 }
             } catch (Exception e) {
                 println "Caught exception during resolution.  Message ${e.message}"
@@ -26,7 +26,7 @@ node ('swampup') {
             }
         }
     }
-    stage ('build') {
+    stage('build') {
         buildInfo.env.collect()
         def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
         docker.build(tagName)
@@ -34,8 +34,9 @@ node ('swampup') {
 //      rtServer.publishBuildInfo(buildInfo)
     }
 
-    stage ('test') {
-        dir ('docker-framework/framework-test') {
-            
+    stage('test') {
+        dir('automation/docker-framework/framework-test') {
+
         }
     }
+}
