@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 node ('master') {
+    git url: 'https://github.com/jfrogtraining/swampup'
     def rtServer = Artifactory.server SERVER_ID
     def rtDocker = Artifactory.docker username: 'jenkins-perf', password: 'jfrog'
     def buildInfo = Artifactory.newBuildInfo()
@@ -27,11 +28,13 @@ node ('master') {
         }
     }
     stage('build') {
-        buildInfo.env.collect()
-        def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
-        docker.build(tagName)
-        rtDocker.push(tagName, REPO, buildInfo)
+        dir ('automation/docker-framework') {
+            buildInfo.env.collect()
+            def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
+            docker.build(tagName)
+            rtDocker.push(tagName, REPO, buildInfo)
 //      rtServer.publishBuildInfo(buildInfo)
+        }
     }
 
     stage('test') {
