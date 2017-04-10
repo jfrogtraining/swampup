@@ -41,7 +41,7 @@ node ('master') {
         dir('automation/docker-framework/framework-test') {
             def gradleWarDownload = readFile "${env.WORKSPACE}/automation/docker-framework/gradeWar-download.json"
             rtServer.download(gradleWarDownload)
-            def tagDockerFramework "${ARTDOCKER_REGISTRY}/docker-framework-test:${env.BUILD_NUMBER}"
+            def tagDockerFramework = "${ARTDOCKER_REGISTRY}/docker-framework-test:${env.BUILD_NUMBER}"
             docker.build(tagDockerFramework)
         }
     }
