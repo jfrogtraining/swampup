@@ -1,0 +1,33 @@
+node {
+    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    def rtGradle = Artifactory.newGradleBuild()
+
+    stage 'Build'
+        git url: 'https://github.com/jfrogtraining/project-examples.git', branch: 'swampup2017'
+
+    stage 'Artifactory configuration'
+        rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
+        rtGradle.deployer repo:'gradle-dev', server: server
+        rtGradle.resolver repo:'libs-release', server: server
+        rtGradle.deployer.addProperty("unit-test", "pass").addProperty("qa-team", "platform", "ui")
+        def buildInfo = Artifactory.newBuildInfo()
+        buildInfo.env.collect()
+
+    stage 'Exec Gradle'
+        buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+
+    stage 'Publish & Scan'
+        server.publishBuildInfo buildInfo
+        if (XRAY_SCAN == "YES") {
+             scanBuild ()
+         }
+}
+
+def scanBuild () {
+    def scanConfig = [
+        'buildName'      : buildInfo.name,
+        'buildNumber'    : buildInfo.number
+    ]
+    def scanResult = server.xrayScan scanConfig
+    echo xrayResults as String
+}

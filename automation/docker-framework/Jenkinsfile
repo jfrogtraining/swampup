@@ -6,6 +6,7 @@ node ('master') {
     def rtDocker = Artifactory.docker username: 'jenkins-perf', password: 'jfrog'
     def buildInfo = Artifactory.newBuildInfo()
     buildInfo.env.capture = true
+    buildInfo.env.collect()
 
     stage('Dependencies') {
         dir('automation/docker-framework') {
@@ -15,7 +16,7 @@ node ('master') {
                 def downloadFrameworkSpec = readFile "${env.WORKSPACE}/automation/docker-framework/framework-download.json"
                 buildInfo = rtServer.download spec: downloadFrameworkSpec
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
-                    println "Downloaded dependenices"
+                    println "Downloaded dependencies"
                 } else {
                     println "Missing Dependencies either jdk or tomcat - see listing below:"
                     sh 'ls -d */*'
@@ -29,17 +30,19 @@ node ('master') {
     }
     stage('build') {
         dir ('automation/docker-framework') {
-            buildInfo.env.collect()
             def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
             docker.build(tagName)
             rtDocker.push(tagName, REPO, buildInfo)
-//      rtServer.publishBuildInfo(buildInfo)
+            rtServer.publishBuildInfo(buildInfo)
         }
     }
 
     stage('test') {
         dir('automation/docker-framework/framework-test') {
-
+            def gradleWarDownload = readFile "${env.WORKSPACE}/automation/docker-framework/gradeWar-download.json"
+            rtServer.download(gradleWarDownload)
+            def tagDockerFramework "${ARTDOCKER_REGISTRY}/docker-framework-test:${env.BUILD_NUMBER}"
+            docker.build(tagDockerFramework)
         }
     }
 }

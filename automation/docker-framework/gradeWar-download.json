@@ -1,0 +1,11 @@
+{
+  "files": [
+    {
+      "pattern": "libs-release-local/org/jfrog/example/gradle/webservice/*/*.war",
+      "target": "war/webservice.war",
+      "props": "unit-test=pass",
+      "flat": "true",
+      "build": "gradle-example/LATEST"
+    }
+  ]
+}
