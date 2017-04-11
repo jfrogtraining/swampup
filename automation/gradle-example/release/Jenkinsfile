@@ -3,7 +3,7 @@ node {
     def rtGradle = Artifactory.newGradleBuild()
 
     stage 'Build'
-        git url: 'https://github.com/jfrogdev/project-examples.git'
+        git url: 'https://github.com/jfrogtraining/project-examples.git', branch: 'swampup2017'
 
     stage 'Artifactory configuration'
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
