@@ -5,7 +5,7 @@ node ('master') {
     def rtServer = Artifactory.server SERVER_ID
     def rtDocker = Artifactory.docker username: 'jenkins-perf', password: 'jfrog'
     def buildDepInfo = Artifactory.newBuildInfo()
-    def buildFwrInfo = Artifactory.newBuildInfo()
+    def buildInfo = Artifactory.newBuildInfo()
     buildDepInfo.env.capture = true
     buildDepInfo.env.collect()
     buildInfo.env.capture = true
@@ -33,7 +33,7 @@ node ('master') {
                           ]
                         }"""
 
-                buildDepInfo = rtServer.download spec: downloadSpec
+                buildDepInfo = rtServer.download spec: downloadFrameworkSpec
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
                     println "Downloaded dependencies"
                 } else {
