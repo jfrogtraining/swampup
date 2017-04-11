@@ -5,7 +5,7 @@
       "target": "war/webservice.war",
       "props": "unit-test=pass",
       "flat": "true",
-      "build": "gradle-example/LATEST"
+      "build": "gradle-release/LATEST"
     }
   ]
 }
