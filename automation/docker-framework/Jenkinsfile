@@ -33,7 +33,7 @@ node ('master') {
                           ]
                         }"""
 
-                buildDepInfo = rtServer.download spec: downloadFrameworkSpec
+                buildDepInfo = rtServer.download spec: downloadSpec
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
                     println "Downloaded dependencies"
                 } else {
