@@ -125,7 +125,7 @@ def reTagLatest () {
     sh 'cat retag_out.json'
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
-        def regTagStr = curlString +  "api/docker/docker-prod-local/v2/promote -X POST -H 'Content-Type: application/json' -T retag_out.json"
+        def regTagStr = curlString +  "/api/docker/docker-prod-local/v2/promote -X POST -H 'Content-Type: application/json' -T retag_out.json"
         println "Curl String is " + regTagStr
         sh regTagStr
     }
