@@ -19,15 +19,12 @@ node {
     stage 'Publish & Scan'
         server.publishBuildInfo buildInfo
         if (XRAY_SCAN == "YES") {
-             scanBuild ()
+            def scanConfig = [
+                'buildName'      : env.JOB_NAME,
+                'buildNumber'    : env.BUILD_NUMBER,
+                'failBuild'      : false
+            ]
+            def scanResult = server.xrayScan scanConfig
+            echo scanResult as String
          }
-}
-
-def scanBuild () {
-    def scanConfig = [
-        'buildName'      : buildInfo.name,
-        'buildNumber'    : buildInfo.number
-    ]
-    def scanResult = server.xrayScan scanConfig
-    echo xrayResults as String
 }
