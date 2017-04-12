@@ -7,7 +7,7 @@ node {
 
     stage 'Artifactory configuration'
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
-        rtGradle.deployer repo:'gradle-release', server: server
+        rtGradle.deployer repo:DEPLOY_REPO, server: server
         rtGradle.resolver repo:'libs-release', server: server
         rtGradle.deployer.addProperty("unit-test", "pass").addProperty("qa-team", "platform", "ui")
         def buildInfo = Artifactory.newBuildInfo()
