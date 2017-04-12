@@ -2,10 +2,11 @@
 
 node ('master') {
     git url: 'https://github.com/jfrogtraining/swampup'
-    def rtServer = Artifactory.server url: SERVER_URL, credentialsId: CREDENTIALS
-    def rtDocker = Artifactory.docker username: 'jenkins-perf', password: 'jfrog'
+    def rtServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def buildDepInfo = Artifactory.newBuildInfo()
     def buildInfo = Artifactory.newBuildInfo()
+    def tagDockerApp
+    def rtDocker
     buildDepInfo.env.capture = true
     buildDepInfo.env.collect()
     buildInfo.env.capture = true
@@ -26,18 +27,22 @@ node ('master') {
                       }
                     ]
                  }"""
-                rtServer.download(gradleWarDownload)
+                buildDepInfo = rtServer.download(gradleWarDownload)
+            } catch (Exception e) {
+                println "Caught Exception during resolution. Message ${e.message}"
+                throw e
             }
         }
     }
 
     stage ('build & deploy') {
         dir ('automation/docker-app') {
-            def tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
+            tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
             docker.build(tagDockerApp)
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                def rtDocker = Artifactory.docker(env.USERNAME, env.PASSWORD)
-                buildInfo = rtDocker.push(tagName, REPO)
+                rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
+                buildInfo = rtDocker.push(tagDockerApp, REPO)
+                buildInfo.append(buildDepInfo)
                 rtServer.publishBuildInfo buildInfo
              }
         }
@@ -45,7 +50,42 @@ node ('master') {
 
      stage ('test') {
         dir('automation/docker-app/app-test') {
-
+            sh 'docker rmi '+tagDockerApp+' || true'
+            rtDocker.pull (tagDockerApp)
+            if (testApp(tagDockerApp)) {
+                  println "Setting property and promotion"
+             } else {
+                  currentBuild.result = 'UNSTABLE'
+                  return
+             }
         }
      }
+
+     stage('Xray Scan') {
+         if (XRAY_SCAN == "YES") {
+             def xrayConfig = [
+                'buildName'     : env.JOB_NAME,
+                'buildNumber'   : env.BUILD_NUMBER,
+                'failBuild'     : true
+              ]
+              def xrayResults = rtServer.xrayScan xrayConfig
+              echo xrayResults as String
+         } else {
+              println "No Xray scan performed. To enable set XRAY_SCAN = YES"
+         }
+     }
+}
+
+def testApp (tag) {
+    docker.image(tag).withRun('-p 8181:8181') {c ->
+        sleep 5
+        def stdout = sh(script: 'curl "http://localhost:8181/swampup/"', returnStdout: true)
+        if (stdout.contains("Welcome Docker Lifecycle Training")) {
+            println "*** Passed Test: " + stdout
+            return true
+        } else {
+            println "*** Failed Test: " + stdout
+            return false
+        }
+    }
 }

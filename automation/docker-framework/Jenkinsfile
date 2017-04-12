@@ -93,7 +93,7 @@ node ('master') {
                 'buildNumber'   : env.BUILD_NUMBER,
                 'failBuild'     : true
             ]
-            def xrayResults = artServer.xrayScan xrayConfig
+            def xrayResults = rtServer.xrayScan xrayConfig
             echo xrayResults as String
         } else {
             println "No Xray scan performed. To enable set XRAY_SCAN = YES"
