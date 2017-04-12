@@ -1,5 +1,5 @@
 {
-  "targetRepo" : "TARGET_REPO",
+  "targetRepo" : "TARGETREPO",
   "dockerRepository" : "docker-framework",
   "tag" : "@",
   "targetTag" : "latest",
