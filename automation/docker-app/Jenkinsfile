@@ -1,0 +1,51 @@
+#!/usr/bin/env groovy
+
+node ('master') {
+    git url: 'https://github.com/jfrogtraining/swampup'
+    def rtServer = Artifactory.server url: SERVER_URL, credentialsId: CREDENTIALS
+    def rtDocker = Artifactory.docker username: 'jenkins-perf', password: 'jfrog'
+    def buildDepInfo = Artifactory.newBuildInfo()
+    def buildInfo = Artifactory.newBuildInfo()
+    buildDepInfo.env.capture = true
+    buildDepInfo.env.collect()
+    buildInfo.env.capture = true
+    buildInfo.env.collect()
+
+    stage ('Dependencies') {
+        dir ('automation/docker-app') {
+            try {
+                println "Gather Released Docker Framework and Gradle War file"
+                def downloadAppSpec = "${env.WORKSPACE}/automation/docker-framework/appmodules-download.json"
+                def gradleWarDownload = """{
+                    "files": [
+                      {
+                        "pattern": "gradle-release-local/org/jfrog/example/gradle/webservice/*/*.war",
+                        "target": "war/webservice.war",
+                        "props": "unit-test=pass",
+                        "flat": "true"
+                      }
+                    ]
+                 }"""
+                rtServer.download(gradleWarDownload)
+            }
+        }
+    }
+
+    stage ('build & deploy') {
+        dir ('automation/docker-app') {
+            def tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
+            docker.build(tagDockerApp)
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                def rtDocker = Artifactory.docker(env.USERNAME, env.PASSWORD)
+                buildInfo = rtDocker.push(tagName, REPO)
+                rtServer.publishBuildInfo buildInfo
+             }
+        }
+     }
+
+     stage ('test') {
+        dir('automation/docker-app/app-test') {
+
+        }
+     }
+}
