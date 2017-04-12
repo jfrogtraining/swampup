@@ -122,6 +122,7 @@ def reTagLatest () {
 
     def BUILD_NUMBER = env.BUILD_NUMBER
     sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
+    sh 'sed -E "s/TARGET_REPO/$PROMOTE_REPO/" retag_out.json retag_out.json'
     sh 'cat retag_out.json'
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
