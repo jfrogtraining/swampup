@@ -1,4 +1,4 @@
-FROM jfrogtraining-docker-prod.jfrog.io/docker-framework:latest
+FROM jfrogtraining-docker-dev-local.jfrog.io/docker-framework:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
