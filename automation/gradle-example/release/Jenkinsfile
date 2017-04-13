@@ -11,10 +11,10 @@ node {
         rtGradle.resolver repo:'libs-release', server: server
         rtGradle.deployer.addProperty("unit-test", "pass").addProperty("qa-team", "platform", "ui")
         def buildInfo = Artifactory.newBuildInfo()
-        buildInfo.env.collect()
+        buildInfo.env.capture = true
 
     stage 'Exec Gradle'
-        buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+        rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish' buildInfo: buildInfo
 
     stage 'Publish & Scan'
         server.publishBuildInfo buildInfo

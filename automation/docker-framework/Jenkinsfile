@@ -32,7 +32,7 @@ node ('master') {
                           ]
                         }"""
 
-                buildDepInfo = rtServer.download spec: downloadSpec
+                rtServer.download (downloadSpec, buildDepInfo)
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
                     println "Downloaded dependencies"
                 } else {
@@ -52,7 +52,7 @@ node ('master') {
                     def rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
                     def tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
                     docker.build(tagName)
-                    buildInfo = rtDocker.push(tagName, REPO)
+                    buildInfo = rtDocker.push(tagName, REPO, buildInfo)
                     buildInfo.append(buildDepInfo)
                     rtServer.publishBuildInfo buildInfo
             }
