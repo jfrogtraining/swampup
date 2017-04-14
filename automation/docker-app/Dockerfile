@@ -1,4 +1,4 @@
-FROM gcartifactory-us.jfrog.info:5005/docker-framework:latest
+FROM jfrog.local:5001/docker-framework:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
