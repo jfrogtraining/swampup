@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 node ('master') {
-    git url: 'https://github.com/jfrogtraining/swampup'
+    git url: 'https://github.com/jainishshah17/swampup'
     def rtServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def buildDepInfo = Artifactory.newBuildInfo()
     def buildInfo = Artifactory.newBuildInfo()
