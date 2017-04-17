@@ -56,6 +56,7 @@ node ('master') {
             rtDocker.pull (tagDockerApp)
             if (testApp(tagDockerApp)) {
                   println "Setting property and promotion"
+                  sh 'docker rmi '+tagDockerApp+' || true'
              } else {
                   currentBuild.result = 'UNSTABLE'
                   return
@@ -109,7 +110,6 @@ def testApp (tag) {
             println "*** Failed Test: " + stdout
             return false
         }
-        sh 'docker rmi '+tagDockerApp+' || true'
     }
 }
 
