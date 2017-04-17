@@ -109,6 +109,7 @@ def testApp (tag) {
             println "*** Failed Test: " + stdout
             return false
         }
+        sh 'docker rmi '+tagDockerApp+' || true'
     }
 }
 
