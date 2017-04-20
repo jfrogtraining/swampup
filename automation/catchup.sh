@@ -9,8 +9,9 @@ exercise1() {
    cd $HOME/swampup/automation/docker-framework
    curl -H "X-JFrog-Art-Api:${APIKEY}" -H "Content-Type:application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -X PUT "http://jfrog.local/artifactory/api/repositories/automation-framework-prod-local" -T automation-framework-prod-local.json
    cd tomcat
+   jfrog rt c clear
    jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
-   jfrog rt c artifactory-ha --url=http://jfrog.local:8084/artifactory --user=admin --password=password
+   jfrog rt c artifactory-ha --url=http://jfrog.local/artifactory --user=admin --password=password
    jfrog rt dl --server-id=swampup-automation --spec framework-download.json
    jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
    jfrog rt s --server-id=artifactory-ha --spec framework-verify.json

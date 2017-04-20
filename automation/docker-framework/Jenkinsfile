@@ -107,7 +107,7 @@ node ('master') {
               'buildNumber'        : env.BUILD_NUMBER,
               'targetRepo'         : PROMOTE_REPO,
               'comment'            : 'Framework works with latest version of application to pass test',
-              'sourceRepo'         : 'docker-dev-local',
+              'sourceRepo'         : SOURCE_REPO,
               'status'             : 'Released',
               'includeDependencies': false,
               'copy'               : true
