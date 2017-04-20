@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node ('orbitera') {
+node ('master') {
     git url: 'https://github.com/jfrogtraining/swampup'
     def rtServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def buildDepInfo = Artifactory.newBuildInfo()
