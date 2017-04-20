@@ -27,4 +27,6 @@ The following files are used for Docker-Framework build
 [Dockerfile] Put the apache tomcat, Java jdk and Ubuntu in docker container
 [Jenkinsfile] pipeline code for docker-framework build
 [retag.json] Tag the latest build with LATEST tag.
+[framework-download.json] fileSpec to download java jdk and tomcat based on properties
+[gradeWar-download.json] fileSpect to download latest war file from gradle build
 ```

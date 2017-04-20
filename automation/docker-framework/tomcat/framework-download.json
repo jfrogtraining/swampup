@@ -9,6 +9,6 @@
       "pattern": "tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.0.32.tar.gz",
       "target": "tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.0.32.tar.gz",
       "flat": "true"
-    },
+    }
   ]
 }

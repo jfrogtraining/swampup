@@ -1,5 +1,5 @@
 {
-  "key": "automation-framework-prod-local",
+  "key": "automation-docker-prod-local",
   "rclass" : "local",
   "packageType": "generic",
   "description": "Ready for production release Framework Repository",
