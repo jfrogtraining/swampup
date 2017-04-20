@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "aql": {
+        "items.find": {
+          "repo": "automation-tomcat-local",
+          "$and": [
+            {
+              "path": {"$match": "java"},
+              "name": {"$match": "jdk-8u91-linux-x64.tar.gz"},
+              "property.key" : {"$match" : "security-approval"},
+              "property.value" : {"$eq" : "yes"},
+              "property.key" : {"$match" : "approver"},
+              "property.value" : {"$eq" : "stanley"}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "aql": {
+        "items.find": {
+          "repo": "automation-tomcat-local",
+          "$and": [
+            {
+              "path": {"$match": "org/apache/apache-tomcat"},
+              "name": {"$match": "apache-tomcat-8.0.32.tar.gz"},
+              "property.key" : {"$match" : "security-approval"},
+              "property.value" : {"$eq" : "yes"},
+              "property.key" : {"$match" : "approver"},
+              "property.value" : {"$eq" : "stanley"}
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

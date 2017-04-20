@@ -41,7 +41,7 @@ node ('master') {
             docker.build(tagDockerApp)
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                 rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
-                rtDocker.push(tagDockerApp, REPO, buildInfo) 
+                rtDocker.push(tagDockerApp, REPO, buildInfo)
                 buildInfo.append(buildDepInfo)
                 rtServer.publishBuildInfo buildInfo
              }

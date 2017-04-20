@@ -1,0 +1,47 @@
+{
+  "files": [
+    {
+      "pattern": "",
+      "target": "",
+    },
+    {
+      "pattern": "",
+      "target": "",
+    },
+  ]
+}
+
+{
+  "files": [
+    {
+      "aql": {
+        "items.find": {
+          "repo": "",
+          "$and": [
+            {
+              "path": {"$match": ""},
+              "name": {"$match": ""},
+              "property.key" : {"$match" : ""},
+              "property.value" : {"$ne" : ""}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "aql": {
+        "items.find": {
+          "repo": "",
+          "$and": [
+            {
+              "path": {"$match": ""},
+              "name": {"$match": ""},
+              "property.key" : {"$match" : ""},
+              "property.value" : {"$ne" : ""}
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

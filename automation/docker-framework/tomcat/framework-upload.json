@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "pattern": "tomcat-local/java/jdk-8u91-linux-x64.tar.gz",
+      "target": "tomcat-local/java/jdk-8u91-linux-x64.tar.gz",
+      "props": "security-approval=yes;approver=stanley",
+      "flat": "true"
+    },
+    {
+      "pattern": "tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.0.32.tar.gz",
+      "target": "tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.0.32.tar.gz",
+      "props": "security-approval=yes;approver=stanley",
+      "flat" : "true"
+    }
+  ]
+}

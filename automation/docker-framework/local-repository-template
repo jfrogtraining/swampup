@@ -1,0 +1,24 @@
+{
+  - "key": "local-repo1",
+  + "rclass" : "local",
+  + "packageType": "maven" | "gradle" | "ivy" | "sbt" | "nuget" | "gems" | "npm" | "bower" | "debian" | "composer" | "pypi" | "docker" | "vagrant" | "gitlfs" | "yum" | "conan" | "generic"
+  - "description": "The local repository public description",
+  - "notes": "Some internal notes",
+  - "includesPattern": "**/*" (default),
+  - "excludesPattern": "" (default),
+  - "repoLayoutRef" : "maven-2-default",
+  - "debianTrivialLayout" : false,
+  - "checksumPolicyType": "client-checksums" (default) | "server-generated-checksums"
+  - "handleReleases": true (default),
+  - "handleSnapshots": true (default),
+  - "maxUniqueSnapshots": 0 (default),
+  - "maxUniqueTags": 0 (default)
+  - "snapshotVersionBehavior": "unique" | "non-unique" (default) | "deployer",
+  - "suppressPomConsistencyChecks": false (default),
+  - "blackedOut": false (default),
+  - "propertySets": ["ps1", "ps2"],
+  - "archiveBrowsingEnabled" : false,
+  - "calculateYumMetadata" : false,
+  - "yumRootDepth" : 0,
+  - "dockerApiVersion" : "V2" (default)
+}
