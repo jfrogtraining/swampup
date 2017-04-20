@@ -1,6 +1,6 @@
 FROM jfrog.local:5001/docker-framework:latest
 
-MAINTAINER Stanley Fong stanleyf@jfrog.com
+MAINTAINER Jainish Shah jainishs@jfrog.com
 
 ADD war/*.war /home/exec/tomcat/webapps/swampup.war
 
