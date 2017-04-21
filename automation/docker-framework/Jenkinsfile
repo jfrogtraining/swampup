@@ -55,6 +55,7 @@ node ('master') {
                     buildInfo = rtDocker.push(tagName, REPO, buildInfo)
                     buildInfo.append(buildDepInfo)
                     rtServer.publishBuildInfo buildInfo
+                    sh 'docker rmi $tagName'
             }
         }
     }
@@ -86,6 +87,7 @@ node ('master') {
                 currentBuild.result = 'UNSTABLE'
                 return
             }
+            sh 'docker rmi $tagDockerFramework'
         }
     }
 

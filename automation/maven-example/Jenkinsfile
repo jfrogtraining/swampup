@@ -7,27 +7,50 @@ node {
 
     stage 'Artifactory configuration'
         rtMaven.tool = MAVEN_TOOL // Tool name from Jenkins configuration
-        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
+        rtMaven.deployer releaseRepo:'automation-mvn-solution-local', snapshotRepo:'automation-mvn-sol-snapshot-local', server: server
         rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
         rtMaven.deployer.addProperty("unit-test", "pass").addProperty("qa-team", "platform", "ui")
         def buildInfo = Artifactory.newBuildInfo()
-        buildInfo.env.collect()
+        buildInfo.env.capture = true
 
     stage 'Exec Maven'
         rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
         
     stage 'Publish & Scan'
+        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+        if (reportOnTestsForBuild ()) {
+            currentBuild.result = 'UNSTABLE'
+        }
         server.publishBuildInfo buildInfo
         if (XRAY_SCAN == "YES") {
-            scanBuild ()
+             def scanConfig = [
+                'buildName'      : buildInfo.name,
+                'buildNumber'    : buildInfo.number
+            ]
+            def scanResult = server.xrayScan scanConfig
+            echo xrayResults as String
         }
 }
 
-def scanBuild () {
-    def scanConfig = [
-        'buildName'      : buildInfo.name,
-        'buildNumber'    : buildInfo.number
-    ]
-    def scanResult = server.xrayScan scanConfig
-    echo xrayResults as String
+@NonCPS
+def reportOnTestsForBuild () {
+    def failedTests = []
+    def build = manager.build
+    if (build.getAction(hudson.tasks.junit.TestResultAction.class) == null) {
+        println "No Tests"
+        return true
+    }
+    def result = build.getAction(hudson.tasks.junit.TestResultAction.class).result
+    if ((result == null) || (result.failCount < 1)) {
+        println "No test results"
+        return true
+    } else {
+        println "Failed test count: " + result.getFailCount()
+        println "Passed test count: " + result.getPassCount()
+        failedTests = result.getFailedTests()
+        failedTests.each { test ->
+            println test.name
+        }
+        return (result.getFailCount())
+    }
 }
