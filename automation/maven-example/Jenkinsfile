@@ -41,7 +41,7 @@ def reportOnTestsForBuild () {
         return true
     }
     def result = build.getAction(hudson.tasks.junit.TestResultAction.class).result
-    if ((result == null) || (result.failCount < 1)) {
+    if ((result == null)) {
         println "No test results"
         return true
     } else {

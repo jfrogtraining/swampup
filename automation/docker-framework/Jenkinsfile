@@ -87,7 +87,6 @@ node ('master') {
                 currentBuild.result = 'UNSTABLE'
                 return
             }
-            sh 'docker rmi $tagDockerFramework'
         }
     }
 
@@ -150,17 +149,19 @@ def reTagLatest (targetRepo) {
 }
 
 def testFramework (tag) {
+    def result = true
     docker.image(tag).withRun('-p 8181:8181') {c ->
         sleep 5
         def stdout = sh(script: 'curl "http://localhost:8181/swampup/"', returnStdout: true)
         if (stdout.contains("Welcome Docker Lifecycle Training")) {
             println "*** Passed Test: " + stdout
-            return true
         } else {
             println "*** Failed Test: " + stdout
-            return false
+            result = false
         }
     }
+    sh 'docker rmi $tag'
+    return result
 }
 
 def updateProperty (property) {
