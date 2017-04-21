@@ -79,7 +79,9 @@ node ('master') {
             docker.build(tagDockerFramework)
             if (testFramework(tagDockerFramework)) {
                 println "Setting property and promotion"
+                updateProperty ("functional-test=pass")
             } else {
+                updateProperty ("functional-test=fail; failed-test=page-not-loaded")
                 currentBuild.result = 'UNSTABLE'
                 return
             }
@@ -106,30 +108,37 @@ node ('master') {
               'buildName'          : env.JOB_NAME,
               'buildNumber'        : env.BUILD_NUMBER,
               'targetRepo'         : PROMOTE_REPO,
-              'comment'            : 'Framework works with latest version of application to pass test',
+              'comment'            : 'Framework test with latest version of application',
               'sourceRepo'         : SOURCE_REPO,
               'status'             : 'Released',
               'includeDependencies': false,
               'copy'               : true
             ]
             rtServer.promote promotionConfig
-            reTagLatest ()
+            reTagLatest (SOURCE_REPO)
+            reTagLatest (PROMOTE_REPO)
          }
     }
 }
 
-def reTagLatest () {
-
-    def BUILD_NUMBER = env.BUILD_NUMBER
-    sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
-    sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
-    sh 'cat retaga_out.json'
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-        def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
-        def regTagStr = curlString +  "/api/docker/${PROMOTE_REPO}/v2/promote -X POST -H 'Content-Type: application/json' -T retaga_out.json"
-        println "Curl String is " + regTagStr
-        sh regTagStr
-    }
+def reTagLatest (targetRepo) {
+     def BUILD_NUMBER = env.BUILD_NUMBER
+     sh 'sed -E "s/@/$BUILD_NUMBER/" ${env.WORKSPACE}/automation/docker-framework/retag.json > retag_out.json'
+     switch (targetRepo) {
+          case PROMOTE_REPO :
+              sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
+              break
+          case SOURCE_REPO :
+               sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
+               break
+      }
+      sh 'cat retaga_out.json'
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
+          def regTagStr = curlString +  "/api/docker/$targetRepo/v2/promote -X POST -H 'Content-Type: application/json' -T retaga_out.json"
+          println "Curl String is " + regTagStr
+          sh regTagStr
+      }
 }
 
 def testFramework (tag) {
@@ -146,3 +155,11 @@ def testFramework (tag) {
     }
 }
 
+def updateProperty (property) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + "-X PUT " + SERVER_URL
+            def updatePropStr = curlString +  "/api/storage/${SOURCE_REPO}/docker-framework/${env.BUILD_NUMBER}?properties=${property}"
+            println "Curl String is " + updatePropStr
+            sh updatePropStr
+     }
+}
