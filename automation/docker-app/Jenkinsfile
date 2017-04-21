@@ -16,18 +16,8 @@ node ('master') {
         dir ('automation/docker-app') {
             try {
                 println "Gather Released Docker Framework and Gradle War file"
-                def downloadAppSpec = "${env.WORKSPACE}/automation/docker-framework/appmodules-download.json"
-                def gradleWarDownload = """{
-                    "files": [
-                      {
-                        "pattern": "gradle-release-local/org/jfrog/example/gradle/webservice/1.1.1/*.war",
-                        "target": "war/webservice.war",
-                        "props": "unit-test=pass",
-                        "flat": "true"
-                      }
-                    ]
-                 }"""
-                rtServer.download(gradleWarDownload, buildDepInfo )
+                def downloadAppSpec = readFile "${env.WORKSPACE}/automation/docker-framework/appmodules-download.json"
+                rtServer.download(downloadAppSpec, buildDepInfo )
             } catch (Exception e) {
                 println "Caught Exception during resolution. Message ${e.message}"
                 throw e
@@ -84,7 +74,7 @@ node ('master') {
               'buildNumber'        : env.BUILD_NUMBER,
               'targetRepo'         : PROMOTE_REPO,
               'comment'            : 'App works with latest released version of gradle swampup app, tomcat and jdk',
-              'sourceRepo'         : 'docker-dev-local',
+              'sourceRepo'         : SOURCE_REPO,
               'status'             : 'Released',
               'includeDependencies': false,
               'copy'               : true
@@ -111,7 +101,7 @@ def testApp (tag) {
             result = false
         }
     }
-    sh 'docker rmi $tag'
+    sh 'docker rmi ${tag}'
     return result
 }
 
