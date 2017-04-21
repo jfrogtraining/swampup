@@ -75,6 +75,7 @@ node ('master') {
             }"""
 
             rtServer.download(gradleWarDownload)
+            updateDockerFile()
             def tagDockerFramework = "${ARTDOCKER_REGISTRY}/docker-framework-test:${env.BUILD_NUMBER}"
             docker.build(tagDockerFramework)
             if (testFramework(tagDockerFramework)) {
@@ -119,6 +120,11 @@ node ('master') {
             reTagLatest (PROMOTE_REPO)
          }
     }
+}
+
+def updateDockerFile () {
+    def BUILD_NUMBER = env.BUILD_NUMBER
+    sh 'sed -i "s/docker-framework:latest/docker-framework:$BUILD_NUMBER/" Dockerfile'
 }
 
 def reTagLatest (targetRepo) {
