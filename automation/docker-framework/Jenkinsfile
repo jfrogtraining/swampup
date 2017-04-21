@@ -123,7 +123,7 @@ node ('master') {
 
 def reTagLatest (targetRepo) {
      def BUILD_NUMBER = env.BUILD_NUMBER
-     sh 'sed -E "s/@/$BUILD_NUMBER/" ${env.WORKSPACE}/automation/docker-framework/retag.json > retag_out.json'
+     sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
      switch (targetRepo) {
           case PROMOTE_REPO :
               sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
