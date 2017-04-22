@@ -161,6 +161,7 @@ def testFramework (tag) {
         }
     }
     sh "docker rmi ${tag}"
+    sh "docker rmi ${tagName}"
     return result
 }
 

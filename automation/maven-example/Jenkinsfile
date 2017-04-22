@@ -28,7 +28,7 @@ node {
                 'buildNumber'    : buildInfo.number
             ]
             def scanResult = server.xrayScan scanConfig
-            echo xrayResults as String
+            echo scanResult as String
         }
 }
 

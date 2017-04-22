@@ -101,7 +101,7 @@ def testApp (tag) {
             result = false
         }
     }
-    sh 'docker rmi ${tag}'
+    sh "docker rmi ${tag}"
     return result
 }
 
