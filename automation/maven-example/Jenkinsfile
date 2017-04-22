@@ -25,7 +25,8 @@ node {
         if (XRAY_SCAN == "YES") {
              def scanConfig = [
                 'buildName'      : buildInfo.name,
-                'buildNumber'    : buildInfo.number
+                'buildNumber'    : buildInfo.number,
+                'failBuild'      : false
             ]
             def scanResult = server.xrayScan scanConfig
             echo scanResult as String
