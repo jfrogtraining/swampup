@@ -16,7 +16,7 @@ node ('master') {
         dir ('automation/docker-app') {
             try {
                 println "Gather Released Docker Framework and Gradle War file"
-                def downloadAppSpec = readFile "${env.WORKSPACE}/automation/docker-framework/appmodules-download.json"
+                def downloadAppSpec = readFile "${env.WORKSPACE}/automation/docker-app/appmodules-download.json"
                 rtServer.download(downloadAppSpec, buildDepInfo )
             } catch (Exception e) {
                 println "Caught Exception during resolution. Message ${e.message}"
