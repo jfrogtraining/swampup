@@ -1,0 +1,7 @@
+items.find (
+    {
+      "repo": {"$match":"*-dev-local"},
+       "$and" : [{"property.key" : {"$match" :
+                            "*.alert.topSeverity"}},
+                         {"property.value" : {"$eq" : "Critical"}}]})
+.include("repo", "name", "path", "artifact.module.build")

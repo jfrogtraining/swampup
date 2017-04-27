@@ -3,13 +3,9 @@
 node ('master') {
     git url: 'https://github.com/jfrogtraining/swampup'
     def rtServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
-    def buildDepInfo = Artifactory.newBuildInfo()
     def buildInfo = Artifactory.newBuildInfo()
     def tagName
-    buildDepInfo.env.capture = true
-    buildDepInfo.env.collect()
     buildInfo.env.capture = true
-    buildInfo.env.collect()
 
     stage('Dependencies') {
         dir('automation/docker-framework') {
@@ -33,7 +29,7 @@ node ('master') {
                           ]
                         }"""
 
-                rtServer.download (downloadSpec, buildDepInfo)
+                rtServer.download (downloadSpec, buildInfo)
                 if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
                     println "Downloaded dependencies"
                 } else {
@@ -53,8 +49,7 @@ node ('master') {
                     def rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
                     tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
                     docker.build(tagName)
-                    buildInfo = rtDocker.push(tagName, REPO, buildInfo)
-                    buildInfo.append(buildDepInfo)
+                    rtDocker.push(tagName, REPO, buildInfo)
                     rtServer.publishBuildInfo buildInfo
             }
         }
@@ -151,7 +146,7 @@ def reTagLatest (targetRepo) {
 def testFramework (tag) {
     def result = true
     docker.image(tag).withRun('-p 8181:8181') {c ->
-        sleep 5
+        sleep 10
         def stdout = sh(script: 'curl "http://localhost:8181/swampup/"', returnStdout: true)
         if (stdout.contains("Welcome Docker Lifecycle Training")) {
             println "*** Passed Test: " + stdout

@@ -1,0 +1,8 @@
+builds.find (
+   {
+	"module.artifact.item.@docker.manifest":{"$eq":"latest"},
+        "module.artifact.item.@functional-test":{"$eq":"pass"},
+        "module.artifact.item.repo":{"$eq":"automation-docker-prod-local"},
+        "module.artifact.item.path":{"$eq":"docker-app/latest"}
+   }
+).include("name","number", "module.artifact.item")

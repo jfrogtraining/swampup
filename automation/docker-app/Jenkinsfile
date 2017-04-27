@@ -3,21 +3,17 @@
 node ('master') {
     git url: 'https://github.com/jfrogtraining/swampup'
     def rtServer = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
-    def buildDepInfo = Artifactory.newBuildInfo()
     def buildInfo = Artifactory.newBuildInfo()
     def tagDockerApp
     def rtDocker
-    buildDepInfo.env.capture = true
-    buildDepInfo.env.collect()
     buildInfo.env.capture = true
-    buildInfo.env.collect()
 
     stage ('Dependencies') {
         dir ('automation/docker-app') {
             try {
                 println "Gather Released Docker Framework and Gradle War file"
                 def downloadAppSpec = readFile "${env.WORKSPACE}/automation/docker-app/appmodules-download.json"
-                rtServer.download(downloadAppSpec, buildDepInfo )
+                rtServer.download(downloadAppSpec, buildInfo )
             } catch (Exception e) {
                 println "Caught Exception during resolution. Message ${e.message}"
                 throw e
@@ -32,7 +28,6 @@ node ('master') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                 rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
                 rtDocker.push(tagDockerApp, REPO, buildInfo)
-                buildInfo.append(buildDepInfo)
                 rtServer.publishBuildInfo buildInfo
              }
         }
@@ -92,7 +87,7 @@ node ('master') {
 def testApp (tag) {
     def result = true
     docker.image(tag).withRun('-p 8181:8181') {c ->
-        sleep 5
+        sleep 10
         def stdout = sh(script: 'curl "http://localhost:8181/swampup/"', returnStdout: true)
         if (stdout.contains("Welcome Docker Lifecycle Training")) {
             println "*** Passed Test: " + stdout
