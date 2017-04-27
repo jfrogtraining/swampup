@@ -1,4 +1,4 @@
-FROM jfrogtraining-docker-prod.jfrog.io/ubuntu:latest
+FROM jfrog.local:5001/ubuntu:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
