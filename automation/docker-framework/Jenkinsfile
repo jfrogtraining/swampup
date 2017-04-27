@@ -77,9 +77,11 @@ node ('master') {
             if (testFramework(tagDockerFramework)) {
                 println "Setting property and promotion"
                 updateProperty ("functional-test=pass")
+                sh "docker rmi ${tagName}"
             } else {
                 updateProperty ("functional-test=fail; failed-test=page-not-loaded")
                 currentBuild.result = 'UNSTABLE'
+                sh "docker rmi ${tagName}"
                 return
             }
         }
@@ -156,7 +158,6 @@ def testFramework (tag) {
         }
     }
     sh "docker rmi ${tag}"
-    sh "docker rmi ${tagName}"
     return result
 }
 
