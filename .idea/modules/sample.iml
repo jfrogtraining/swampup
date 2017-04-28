@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="sample" external.linked.project.path="$MODULE_DIR$/../../sample" external.root.project.path="$MODULE_DIR$/../../sample" external.system.id="GRADLE" external.system.module.group="org.jfrog.automation" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../sample">
+      <excludeFolder url="file://$MODULE_DIR$/../../sample/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../sample/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="artifactory-java-client-api-2.3.4" level="project" />
+    <orderEntry type="library" name="artifactory-java-client-services-2.3.4" level="project" />
+    <orderEntry type="library" name="org.codehaus.groovy.modules.http-builder:http-builder:0.7.1" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.9.0.pr2" level="project" />
+  </component>
+</module>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jfrog.artifactory.client:artifactory-java-client-api:2.3.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jfrog.artifactory.client/artifactory-java-client-api/2.3.5/fc52ab8b8be422a2cfe5ec06e9a0e5234c84c126/artifactory-java-client-api-2.3.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jfrog.artifactory.client/artifactory-java-client-api/2.3.5/fe41f340f4e098fce835e51f4394a5445b3f375f/artifactory-java-client-api-2.3.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

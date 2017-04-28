@@ -1,0 +1,19 @@
+group 'org.jfrog.automation'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+    compile 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
+    compile 'org.jfrog.artifactory.client:artifactory-java-client-api:2.3.4'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
