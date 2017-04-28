@@ -60,7 +60,7 @@ node ('master') {
          } else {
               println "No Xray scan performed. To enable set XRAY_SCAN = YES"
          }
-         sleep 10
+         sleep 30
      }
 
      stage ('promotion') {
