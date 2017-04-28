@@ -5,9 +5,8 @@ items.find (
         "@docker.manifest":{"$eq":"latest"},
         "@functional-test":{"$eq":"pass"},
         "$and":[
-            {"property.key":{"$match":"xray*"}},
-            {"property.value":{"$eq":"pending"}}
+              {"property.key":{"$match":"xray*"}},
+              {"property.value":{"$eq":"indexing"}}
         ]
     }
-).include("name", "@docker.repoName", "@docker.manifest", "artifact.module.build.name", "artifact.module.build.number")
-
+).include("name", "artifact.module.build.name", "artifact.module.build.number")

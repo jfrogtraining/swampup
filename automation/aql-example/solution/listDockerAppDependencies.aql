@@ -6,7 +6,7 @@ items.find (
         "@functional-test":{"$eq":"pass"},
         "$and" :[
                     {"property.key":{"$match":"xray*"}},
-                    {"property.value":{"$eq":"indexed"}}
+                    {"property.value":{"$eq":"indexing"}}
                 ]
     }
 ).include("name", "@docker.repoName", "@docker.manifest", "artifact.module.build", "artifact.module.build.module.dependency")

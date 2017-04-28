@@ -1,0 +1,6 @@
+items.find (
+    {
+      "repo": {"$match":"*-dev-local"}
+      }
+)
+.include("repo", "name", "path", "artifact.module.build")
