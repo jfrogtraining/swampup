@@ -68,11 +68,11 @@ Introduction to Artifactory API and JFrog CLI.  The automation-docker-framework 
 *   2. automation-docker-framework
 *   3. automation-docker-app
 - References
-*   Jfrog rt c show
-*   jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
-*   jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
-*   jfrog rt dl --server-id=swampup-automation --spec framework-download.json
-*   jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
+*   1. Jfrog rt c show
+*   2. jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
+*   3. jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
+*   4. jfrog rt dl --server-id=swampup-automation --spec framework-download.json
+*   5. jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
 
 ```XML
 [Framework-download.json] - downloads JDK Java and Tomcat
