@@ -54,25 +54,25 @@ Excercise 1  - Set Up
 ---------------------
 Introduction to Artifactory API and JFrog CLI.  The automation-docker-framework builds will fail without teh automation-docker-prod-local repository created;
 
-a. clone github/jfrogtraining/swampup
-b. create automation-docker-prod-local repostorty using artifactory API - hint: see swampup/docker-framework/local-repository-template; Use your API Keys.
-c. manually configure to enable automation-docker-prod-local for XRay scan; and configure XRay build and repository watch for automation-prod-local.
-d. develop JFrog CLI file spec to download the following files to your Artifactory HA instance - repository - tomcat-local.  use tomcat-vritual repo in your FileSpec.  Info are:
-   d1. Files to download and upload to Artifactory HA instance -
-       i.	tomcat-local/java/jdk-8u91-linux-x64.tar.gz
-       ii.	tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.5.5.tar.gz
-   d2. Source of these files - a.	http://jfrog.local:8084/artifactory; Repository: tomcat-local
-e. Verify your work by running - "jfrog rt s --server-id=artifactory-ha --spec framework-verify.json"
-f. Execute both the following builds
-   a. gradle-example
-   b. automation-docker-framework
-   c. automation-docker-app
-g. References
-   a. Jfrog rt c show
-   b. jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
-   c. jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
-   d. jfrog rt dl --server-id=swampup-automation --spec framework-download.json
-   e. jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
+- Clone github/jfrogtraining/swampup
+- Create automation-docker-prod-local repostorty using artifactory API; hint: see swampup/docker-framework/local-repository-template; Use your API Keys.
+- Manually configure to enable automation-docker-prod-local for XRay scan and configure XRay build and repository watch for automation-prod-local.
+- Develop JFrog CLI file spec to download the following files to your Artifactory HA instance - repository - tomcat-local.  use tomcat-vritual repo in your FileSpec.  Info are:
+-   Files to download and upload to Artifactory HA instance -
+-     i. tomcat-local/java/jdk-8u91-linux-x64.tar.gz
+-     ii. tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.5.5.tar.gz
+-   Source of these files - a.	http://jfrog.local:8084/artifactory; Repository: tomcat-local
+- Verify your work by running - "jfrog rt s --server-id=artifactory-ha --spec framework-verify.json"
+- Execute both the following builds
+-   a. gradle-example
+-   b. automation-docker-framework
+-   c. automation-docker-app
+- References
+-   a. Jfrog rt c show
+-   b. jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
+-   c. jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
+-   d. jfrog rt dl --server-id=swampup-automation --spec framework-download.json
+-   e. jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
 
 ```XML
 [Framework-download.json] - downloads JDK Java and Tomcat
