@@ -59,9 +59,9 @@ Introduction to Artifactory API and JFrog CLI.  The automation-docker-framework 
 - Manually configure to enable automation-docker-prod-local for XRay scan and configure XRay build and repository watch for automation-prod-local.
 - Develop JFrog CLI file spec to download the following files to your Artifactory HA instance - repository - tomcat-local.  use tomcat-vritual repo in your FileSpec.  Info are:
 -   Files to download and upload to Artifactory HA instance -
--     i. tomcat-local/java/jdk-8u91-linux-x64.tar.gz
--     ii. tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.5.5.tar.gz
--     Source of these files - a.	http://jfrog.local:8084/artifactory; Repository: tomcat-local
+-    i. tomcat-local/java/jdk-8u91-linux-x64.tar.gz
+-    ii. tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.5.5.tar.gz
+-    Source of these files - a.	http://jfrog.local:8084/artifactory; Repository: tomcat-local
 - Verify your work by running - "jfrog rt s --server-id=artifactory-ha --spec framework-verify.json"
 - Execute both the following builds
 -    a. gradle-example
