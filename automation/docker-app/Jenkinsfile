@@ -39,9 +39,9 @@ node ('master') {
             rtDocker.pull (tagDockerApp)
             if (testApp(tagDockerApp)) {
                   println "Setting property and promotion"
-                  updateProperty ("functional-test=pass")
+                  updateProperty ("qa.functional-test=pass")
              } else {
-                  updateProperty ("functional-test=fail; failed-test=page-not-loaded")
+                  updateProperty ("qa.functional-test=fail; qa.failed-test=page-not-loaded")
                   currentBuild.result = 'UNSTABLE'
                   return
              }
@@ -60,7 +60,7 @@ node ('master') {
          } else {
               println "No Xray scan performed. To enable set XRAY_SCAN = YES"
          }
-         sleep 30
+         sleep 60
      }
 
      stage ('promotion') {

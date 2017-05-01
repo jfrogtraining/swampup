@@ -76,10 +76,10 @@ node ('master') {
             docker.build(tagDockerFramework)
             if (testFramework(tagDockerFramework)) {
                 println "Setting property and promotion"
-                updateProperty ("functional-test=pass")
+                updateProperty ("qa.functional-test=pass")
                 sh "docker rmi ${tagName}"
             } else {
-                updateProperty ("functional-test=fail; failed-test=page-not-loaded")
+                updateProperty ("qa.functional-test=fail; qa.failed-test=page-not-loaded")
                 currentBuild.result = 'UNSTABLE'
                 sh "docker rmi ${tagName}"
                 return
@@ -99,7 +99,7 @@ node ('master') {
         } else {
             println "No Xray scan performed. To enable set XRAY_SCAN = YES"
         }
-        sleep 30
+        sleep 60
     }
 
     stage ('promote') {
