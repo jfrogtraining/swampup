@@ -64,15 +64,15 @@ Introduction to Artifactory API and JFrog CLI.  The automation-docker-framework 
 *     Source of these files - a.	http://jfrog.local:8084/artifactory; Repository: tomcat-local
 - Verify your work by running - "jfrog rt s --server-id=artifactory-ha --spec framework-verify.json"
 - Execute both the following builds
-*   a. gradle-example
-*   b. automation-docker-framework
-*   c. automation-docker-app
+*   1. gradle-example
+*   2. automation-docker-framework
+*   3. automation-docker-app
 - References
-*   a. Jfrog rt c show
-*   b. jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
-*   c. jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
-*   d. jfrog rt dl --server-id=swampup-automation --spec framework-download.json
-*   e. jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
+*   Jfrog rt c show
+*   jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
+*   jfrog rt c artifactory-ha –url=://jfrog.local/artifactory –user=admin –password=password
+*   jfrog rt dl --server-id=swampup-automation --spec framework-download.json
+*   jfrog rt u --server-id=artifactory-ha --spec framework-upload.json
 
 ```XML
 [Framework-download.json] - downloads JDK Java and Tomcat
