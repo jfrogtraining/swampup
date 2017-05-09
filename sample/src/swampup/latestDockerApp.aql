@@ -6,7 +6,7 @@ items.find (
         "@functional-test":{"$eq":"pass"},
         "$and":[
               {"property.key":{"$match":"xray*"}},
-              {"property.value":{"$eq":"indexing"}}
+              {"property.value":{"$eq":"indexed"}}
         ]
     }
 ).include("name", "artifact.module.build.name", "artifact.module.build.number", "property.*")

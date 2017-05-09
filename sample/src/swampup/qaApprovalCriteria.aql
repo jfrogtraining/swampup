@@ -4,11 +4,10 @@ items.find (
         "@docker.repoName":{"$eq":"docker-app"},
         "@docker.manifest":{"$eq":"latest"},
         "@functional-test":{"$eq":"pass"},
-        "@unit-test":{"$eq":"pass"},
-        "@manual-test":{"$eq":"pass"},
+        "@qa.manual-test":{"$eq":"pass"},
         "$and":[
               {"property.key":{"$match":"xray*.index.status"}},
-              {"property.value":{"$eq":"Indexed"}}
+              {"property.value":{"$eq":"indexed"}}
         ]
     }
 ).include("name", "artifact.module.build.name", "artifact.module.build.number", "property.*")
