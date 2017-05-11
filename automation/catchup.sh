@@ -7,7 +7,7 @@ APIKEY='AKCp2WWshJKjZjguhB3vD2u3RMwHA7gmxWUohWVhs1FqacHBAzKaiL2pp24NNUEhWHm5Dd4J
 exercise1() {
    echo "performing exercise 1"
    cd $HOME/swampup/automation/docker-framework
-   curl -H "X-JFrog-Art-Api:${APIKEY}" -H "Content-Type:application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -X PUT "http://jfrog.local/artifactory/api/repositories/automation-framework-prod-local" -T automation-framework-prod-local.json
+   curl -H "X-JFrog-Art-Api:${APIKEY}" -H "Content-Type:application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -X PUT "http://jfrog.local/artifactory/api/repositories/automation-docker-prod-local.json" -T automation-docker-prod-local.json
    cd tomcat
    jfrog rt c clear
    jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password

@@ -1,6 +1,6 @@
 items.find (
     {
-      "repo": {"$match":"*-dev-local"},
+      "repo": {"$match":"*-prod-local"},
        "$and" : [{"property.key" : {"$match" :
                             "*.alert.topSeverity"}},
                          {"property.value" : {"$eq" : "Critical"}}]})

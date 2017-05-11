@@ -3,7 +3,7 @@
     {
       "aql": {
         "items.find": {
-          "repo": "automation-tomcat-local",
+          "repo": "tomcat-local",
           "$and": [
             {
               "path": {"$match": "java"},
@@ -20,7 +20,7 @@
     {
       "aql": {
         "items.find": {
-          "repo": "automation-tomcat-local",
+          "repo": "tomcat-local",
           "$and": [
             {
               "path": {"$match": "org/apache/apache-tomcat"},

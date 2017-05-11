@@ -1,12 +1,8 @@
 items.find (
     {
         "repo":{"$eq":"automation-docker-prod-local"},
-        "@docker.repoName":{"$eq":"docker-app"},
-        "$and":[
-            {"property.key":{"$match":"xray*"}},
-            {"property.value":{"$eq":"indexing"}}
-        ]
+        "@docker.repoName":{"$eq":"docker-app"}
     }
-).include("name", "artifact.module.build.name", "artifact.module.build.number", "property.*")
+).include("name", "property.*")
 
 
