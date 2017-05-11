@@ -10,22 +10,18 @@ class testDockerApp {
     def buildName
     def buildNumber
     def response
-    def artifactoryUrl = 'http://jfrog.local/artifactory/'
+    Artifactory artifactory
     String aqlFile
-    Artifactory artifactory = ArtifactoryClient.create(artifactoryUrl, "admin", "password")
+
+    testDockerApp (Artifactory artifactory) {
+        this.artifactory = artifactory
+    }
 
     public def setAqlFile (String aqlFile) {
         this.aqlFile = aqlFile
     }
 
-    public def downloadToProduction () {
-        def testPropertyMap = [:]
-        response = aqlQueryRequest()
-        getBuildInfo()
-        testPropertyMap.put("devops.deployed","true")
-        testPropertyMap.put("devops.deploy","data-center-1")
-    }
-
+    // run simulated tests and update the properties.
     public def runTest () {
         def testPropertyMap = [:]
         response = aqlQueryRequest()
@@ -42,6 +38,17 @@ class testDockerApp {
         println "Test Complete"
     }
 
+
+    public def downloadToProduction () {
+        def testPropertyMap = [:]
+        response = aqlQueryRequest()
+        getBuildInfo()
+        testPropertyMap.put("devops.deployed","true")
+        testPropertyMap.put("devops.deploy","data-center-1")
+        updateTestProperty(testPropertyMap)
+    }
+
+
     public def sendApproval () {
         def testPropertyMap = [:]
         response = aqlQueryRequest()
@@ -56,6 +63,7 @@ class testDockerApp {
             println "Release NOT Approved"
         }
     }
+
 
     def updateTestProperty (def properties) {
         properties.each {it ->
@@ -73,10 +81,6 @@ class testDockerApp {
         }
     }
 
-    def static runAppTestSuite() {
-        println "Docker Application started: http://localhost/swampup; Please run your tests"
-        return true
-    }
 
     def listPropertiesDeployedDockerApp () {
         response = aqlQueryRequest()
@@ -87,6 +91,7 @@ class testDockerApp {
         }
     }
 
+    // verify no xray critical errors; the aql checks for other critiera.
     def checkApprovalCriteria () {
         List properties = response.results[0].properties
         def approved = true
@@ -110,6 +115,13 @@ class testDockerApp {
         return approved
     }
 
+    // place holder for tests.
+    def static runAppTestSuite() {
+        println "Docker Application started: http://localhost/swampup; Please run your tests"
+        return true
+    }
+
+    // prints the build number that is tested - retrieving the latest tag - need to know the build number.
     def getBuildInfo () {
         List properties = response.results[0].properties
         properties.each { it ->
@@ -126,6 +138,7 @@ class testDockerApp {
         }
     }
 
+    // AQL request to artifactory
     def aqlQueryRequest () {
         def aqlQuery = new File (aqlFile).text
         ArtifactoryRequest aqlRequest = new ArtifactoryRequestImpl()
