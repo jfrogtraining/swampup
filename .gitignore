@@ -1,3 +1,7 @@
 # intellij generated files 
 /.idea
+production/
 
+# gradle dependencies 
+dockerlfc/.gradle/
+dockerlfc/gradle/
