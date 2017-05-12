@@ -1,5 +1,5 @@
-./.idea
-./sample/.idea
+.idea*
+sample/.idea*
 .DS_Store*
 .bash_history
 .cache/
