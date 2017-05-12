@@ -99,12 +99,29 @@ class PicojsonConan(ConanFile):
 
 gtest() {
     cd gtest
-    rm -rf build
-    mkdir -p build
-    cd build
-    conan install ../ -e TESTS_ENABLED=1
-    conan build ../
-    bin/runUnitTests
+    conan remove hello/1.0@lasote/testing -f
+    cd gtest
+    cd package
+    conan export lasote/testing
+    cd ..
+    cd consumer
+    conan install -e TEST_ENABLED=1 --build missing
+    conan remove "gtest*" -f
+    conan install
+}
+
+
+gtest_build_require() {
+    conan remove hello/1.0@lasote/testing -f
+    cd gtest_build_requires
+    cd package
+    conan export lasote/testing
+    cd ..
+    cd consumer
+    conan install --profile ./test_prfile.txt
+    conan remove "gtest*" -f
+    conan install
+
 }
 
 
@@ -121,6 +138,7 @@ read_options(){
             7) upload_artifactory ;;
             8) profile_arm_compiler ;;
             10) gtest ;;
+            11) gtest_build_require ;;
             12) package_header_only ;;
             -1) exit 0 ;;
             *) echo -e "${RED}Not valid option! ${STD}" && sleep 2
@@ -142,6 +160,7 @@ show_menus() {
         echo "7. Exercise 7 (Upload packages to artifactory)"
         echo "8. Exercise 8 (Create a profile for RPI toolchain)"
         echo "10. Exercise 10 (Use Gtest as a require)"
+        echo "11. Exercise 11 (Use Gtest as a build_require)"
         echo "12. Exercise 12 (Create a package for a header only library)"
         echo "-1. Exit"
 }

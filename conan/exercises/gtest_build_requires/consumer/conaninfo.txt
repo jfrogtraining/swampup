@@ -1,0 +1,36 @@
+[settings]
+    arch=x86_64
+    build_type=Release
+    compiler=apple-clang
+    compiler.libcxx=libc++
+    compiler.version=8.1
+    os=Macos
+
+[requires]
+    hello/1.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    build_type=Release
+    compiler=apple-clang
+    compiler.libcxx=libc++
+    compiler.version=8.1
+    os=Macos
+
+[full_requires]
+    hello/1.0@lasote/testing:7586e5a72612387c5beb630c8ff07f1a397d08b6
+
+[full_options]
+
+
+[scope]
+    dev=True
+
+[recipe_hash]
+
+
+[env]
+    TEST_ENABLED=1
