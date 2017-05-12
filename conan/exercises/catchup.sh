@@ -100,7 +100,6 @@ class PicojsonConan(ConanFile):
 gtest() {
     cd gtest
     conan remove hello/1.0@lasote/testing -f
-    cd gtest
     cd package
     conan export lasote/testing
     cd ..
@@ -118,9 +117,11 @@ gtest_build_require() {
     conan export lasote/testing
     cd ..
     cd consumer
-    conan install --profile ./test_profile.txt
+    conan install --profile ./test_profile.txt --build missing
     conan remove "gtest*" -f
     conan install
+    conan remove "gtest*" -f
+    conan install --profile ./test_profile.txt
 
 }
 

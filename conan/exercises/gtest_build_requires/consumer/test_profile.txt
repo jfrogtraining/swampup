@@ -5,4 +5,4 @@ TEST_ENABLED=1
 gtest:shared=False
 
 [build_requires]
-hello:gtest/1.8.0@lasote/stable
+hello*: gtest/1.8.0@lasote/stable
