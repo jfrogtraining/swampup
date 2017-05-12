@@ -118,7 +118,7 @@ gtest_build_require() {
     conan export lasote/testing
     cd ..
     cd consumer
-    conan install --profile ./test_prfile.txt
+    conan install --profile ./test_profile.txt
     conan remove "gtest*" -f
     conan install
 
