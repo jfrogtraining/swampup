@@ -1,0 +1,8 @@
+items.find (
+    {
+        "repo":{"$eq":"automation-docker-prod-local"},
+        "@docker.repoName":{"$eq":"docker-app"},
+        "@docker.manifest":{"$eq":"latest"},
+        "@qa.functional-test":{"$eq":"pass"}
+    }
+).include("name", "artifact.module.build.name", "artifact.module.build.number", "property.*")
