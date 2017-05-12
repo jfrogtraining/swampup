@@ -1,0 +1,8 @@
+.idea*
+.DS_Store*
+.bash_history
+.cache/
+.conan/
+.local/
+.sudo_as_admin_successful
+.viminfo
