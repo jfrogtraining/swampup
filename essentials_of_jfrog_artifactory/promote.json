@@ -1,0 +1,18 @@
+{
+    "status": "production",
+    "comment" : "passed all tests and ready for production.",
+    "ciUser": "<insert your user login here>",
+    "dryRun" : false,
+    "targetRepo" : "my-mvn-prod-local",
+    "copy": true,
+    "artifacts" : true,
+    "dependencies" : true,
+    "properties": {
+	"qa.approver": ["<insert your login here>"],
+	"qa.stage": ["prod"],
+    "product.version": ["1.0"],
+    "product.name": ["PiedPiper"],
+    "product.component": ["JavaPart"]
+    },
+    "failFast": true
+}

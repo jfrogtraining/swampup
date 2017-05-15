@@ -1,0 +1,162 @@
+############################################################
+##FIRST COMMANDS : GET YOUR Artifactory                   ##
+############################################################
+#keep your git directory in memory for latest command
+export SCRIPT_DIR=$(pwd)
+
+#Set your workspace directory for the class
+export WORKSPACE_CLASS=<SetYourPathHere>
+
+#define a user login to connect to artifactory (further usage)
+export USER_LOGIN=<ProvideUserLogin>
+
+#Download the following archive from the common Artifactory for the class
+cd $WORKSPACE_CLASS
+
+curl -H "X-JFrog-Art-Api:AKCp2UNgwajwpoz5PghBirpgR5xafggbFyCkSU4DTqK2fQPd9thVcar7wHqk2BNmYjg1km6vJ" -O http://192.168.1.139:8081/artifactory/jswampup-remote/artifactory/artifactory-pro-4.7.6.zip 
+
+##################################################################
+##                   OVERVIEW   SECTION                         ##
+##              START ARTIFACTORY AND CONNECT                   ##
+##################################################################
+
+#unzip the archive 
+unzip artifactory-pro-4.7.6.zip -d $WORKSPACE_CLASS
+
+#get and deploy the license
+sh $SCRIPT_DIR/license.sh <ProvideAName>
+
+#open a new terminal and navigate to your WORKSPACE_CLASS
+#launch Artifactory
+cd artifactory-pro-4.7.6\bin
+
+sh artifactory.sh 
+
+##################################################################
+##                   OVERVIEW   SECTION                         ##
+##OPTIONNAL (if you did not use the UI): Create a non admin user##
+##################################################################
+#First edit user.json file and provide an email adress and password
+#Create your first user (provide user login in the url
+
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/users/$USER_LOGIN -H "content-type: application/vnd.org.jfrog.artifactory.security.User+json" -T $SCRIPT_DIR/user.json
+
+################################################################################
+##                   REPOSITORIES   SECTION                                   ##
+##OPTIONNAL (if you did not use the UI): Lets create repositories (a solution)##
+################################################################################
+#Create local maven repository for snapshots
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-snapshot-local -H "content-type: application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-snapshot-local-config.json
+
+#Create local maven repository for releases
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-staging-local -H "content-type: application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-staging-local-config.json
+
+#Create local maven repository for releases
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/remote-repo -H "content-type: application/vnd.org.jfrog.artifactory.repositories.RemoteRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-remote-config.json
+
+#Create virtual maven repository for snapshots
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-snapshots -H "content-type: application/json" -T $SCRIPT_DIR/repository-snapshot-virtual-config.json
+
+#Create virtual maven repository for releases
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-releases -H "content-type: application/vnd.org.jfrog.artifactory.repositories.VirtualRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-release-virtual-config.json
+
+################################################################################
+##                   SECURITY   SECTION                                       ##
+##OPTIONNAL (if you did not use the UI): Lets start with secutity (a solution)##
+################################################################################
+#Create a group for dev team
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/groups/dev-team -H "content-type: application/vnd.org.jfrog.artifactory.security.Group+json" -T $SCRIPT_DIR/group.json
+
+#update user and add it to dev-team group
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/users/$USER_LOGIN -H "content-type: application/vnd.org.jfrog.artifactory.security.User+json" -T $SCRIPT_DIR/update-user.json
+
+#create permission target for read external, third party libs and local artifacts (both snapshots and releases)
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/permissions/dev-team-read -H "content-type: application/vnd.org.jfrog.artifactory.security.PermissionTarget+json" -T $SCRIPT_DIR/permission-target-read.json
+
+#create permission target for write snapshots only
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/permissions/dev-team-write -H "content-type: application/vnd.org.jfrog.artifactory.security.PermissionTarget+json" -T $SCRIPT_DIR/permission-target-write.json
+
+#Remove the "Anything" permissions to prevent dev team to consume artifacts from other projects
+curl -uadmin:password -X DELETE http://localhost:9091/artifactory/api/security/permissions/Anything
+
+################################################################################
+##                   WORKING WITH BUILD TOOLS                   ##
+################################################################################
+#clone the project-example repository
+cd $WORKSPACE_CLASS
+
+git clone https://simarsingh@bitbucket.org/simarsingh/project-examples.git
+
+cd project-examples
+
+cd maven-example
+
+mvn install
+################################################################################
+##                   WORKING WITH CI SERVER (AFTERNOON)                       ##
+################################################################################
+#open a new command line
+#download preconfigured jenkins 
+cd $HOME
+
+#for linux users use the following :
+#curl -o swampup.zip -H "X-JFrog-Art-Api:AKCp2UNgwajwpoz5PghBirpgR5xafggbFyCkSU4DTqK2fQPd9thVcar7wHqk2BNmYjg1km6vJ" http://192.168.1.139:8081/artifactory/jswampup-remote/jenkins/ubuntu/jenkins.zip 
+curl -o swampup.zip -H "X-JFrog-Art-Api:AKCp2UNgwajwpoz5PghBirpgR5xafggbFyCkSU4DTqK2fQPd9thVcar7wHqk2BNmYjg1km6vJ" http://192.168.1.139:8081/artifactory/jswampup-remote/jenkins/mac/swampup.zip
+
+unzip swampup.zip
+
+export JENKINS_HOME=$HOME/swampup/jenkins
+
+cd swampup 
+
+java -jar jenkins.war --httpPort=9090
+
+################################################################################
+##                   Working with build tools and CI Server                   ##
+##OPTIONNAL (if you did not use the UI): Let's create a new user              ##
+################################################################################
+#create a user for jenkins
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/users/jenkins -H "content-type: application/vnd.org.jfrog.artifactory.security.User+json" -T $SCRIPT_DIR/jenkins-user.json
+
+#create permission for jenkins
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/permissions/jenkins-perm -H "content-type: application/vnd.org.jfrog.artifactory.security.PermissionTarget+json" -T $SCRIPT_DIR/permission-target-jenkins.json
+
+###############################################################################
+##                           LET'S PROMOTE                                    ##
+##OPTIONNAL (if you did not use the UI): Need some place to promote to!       ##
+################################################################################
+#Create local maven repository for releases
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-release-local -H "content-type: application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-release-local-config.json
+
+#update virtuel repository for releases
+curl -uadmin:password -X POST http://localhost:9091/artifactory/api/repositories/my-mvn-releases -H "content-type: application/vnd.org.jfrog.artifactory.repositories.VirtualRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-release-virtual-config2.json
+
+#update permission target for jenkins user
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/permissions/jenkins-perm -H "content-type: application/vnd.org.jfrog.artifactory.security.PermissionTarget+json" -T $SCRIPT_DIR/update-permission-target-jenkins.json
+
+################################################################################
+##                           LET'S AUTOMATE PROMOTION                         ##
+################################################################################
+#Create local maven repository for production (can be done through the UI)
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/repositories/my-mvn-prod-local -H "content-type: application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -T $SCRIPT_DIR/repository-release-local-config.json
+
+#update permission target for user (can be done through the UI)
+curl -uadmin:password -X PUT http://localhost:9091/artifactory/api/security/permissions/release-eng-perm -H "content-type: application/vnd.org.jfrog.artifactory.security.PermissionTarget+json" -T $SCRIPT_DIR/permission-target-release-eng.json
+
+#promote the build to production
+curl -H "content-type:Application/json" -H "X-JFrog-Art-Api:<InsertYourApiKeyHere>" -X POST http://localhost:9091/artifactory/api/build/promote/<InsertBuildName>/<InsertBuildNumber> -T $SCRIPT_DIR/promote.json
+
+################################################################################
+##                           LET'S USE THE CLI                                ##
+################################################################################
+#download the CLI from our central Artifactory (in real life do it from bintray)
+curl  -H "X-JFrog-Art-Api:AKCp2UNgwajwpoz5PghBirpgR5xafggbFyCkSU4DTqK2fQPd9thVcar7wHqk2BNmYjg1km6vJ" -O http://192.168.1.139:8081/artifactory/jswampup-remote/cli-1.2/mac/jfrog
+
+cd $WORKSPACE_CLASS
+#upload some files with properties : product.version=1.0 and product.name=PiedPiper
+./jfrog rt upload "artifactory-*.zip" "my-generic-local" --url=http://localhost:9091/artifactory --user=admin --password=password --props="product.name=PiedPiper;product.version=1.0"
+
+################################################################################
+##                           USE AQL                                          ##
+################################################################################
+curl -H "Content-Type:application/json" -H "X-JFrog-Art-Api:<InsertYourApiKeyHere>" -X POST http://localhost:9091/artifactory/api/search/aql -T $SCRIPT_DIR\aql.json

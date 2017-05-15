@@ -1,0 +1,14 @@
+{
+    "rclass" : "local",
+    "packageType": "maven",
+    "description": "My local repository for releases",
+    "includesPattern": "**/*",
+    "excludesPattern": "",
+    "repoLayoutRef" : "maven-2-default",
+    "checksumPolicyType": "client-checksums",
+    "handleReleases": true,
+    "handleSnapshots": false,
+    "suppressPomConsistencyChecks": false,
+    "blackedOut": false,
+    "archiveBrowsingEnabled" : false
+}

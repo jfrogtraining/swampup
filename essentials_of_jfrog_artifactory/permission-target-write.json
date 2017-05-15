@@ -1,0 +1,8 @@
+{
+  "repositories": ["my-mvn-snapshot-local"],
+  "principals": {
+        "groups" : {
+          "dev-team" : ["d","w","n", "r"]
+        }
+    }
+}
