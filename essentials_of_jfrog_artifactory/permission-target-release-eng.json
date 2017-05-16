@@ -1,0 +1,8 @@
+{
+  "repositories": ["my-mvn-prod-local","my-mvn-release-local"],
+  "principals": {
+        "users" : {
+          "jenkins" : ["d","w","n", "r"]
+        }
+    }
+}

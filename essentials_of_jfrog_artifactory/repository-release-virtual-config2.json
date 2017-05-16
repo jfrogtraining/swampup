@@ -1,0 +1,8 @@
+{
+    "rclass" : "virtual",
+    "packageType": "maven",
+    "description": "My virtual repository for releases",
+    "repositories": ["my-mvn-release-local", "my-mvn-staging-local", "ext-release-local", "remote-repo"],
+    "artifactoryRequestsCanRetrieveRemoteArtifacts": false,
+    "defaultDeploymentRepo": "my-mvn-release-local"
+}
