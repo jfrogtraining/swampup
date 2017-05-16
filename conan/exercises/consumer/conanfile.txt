@@ -1,0 +1,10 @@
+[requires]
+Boost/1.60.0@lasote/stable
+Poco/1.7.2@lasote/stable
+
+[generators]
+cmake
+
+[options]
+Boost:shared=False
+Poco:shared=False
