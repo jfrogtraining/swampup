@@ -11,7 +11,7 @@ consumer() {
    rm -rf build
    mkdir -p build
    cd build
-   conan install ../ --build missing
+   conan install ../ 
    cmake .. -DCMAKE_BUILD_TYPE=Release
    cmake --build .
    cd bin
