@@ -12,7 +12,7 @@ consumer() {
    mkdir -p build
    cd build
    conan install ../ --build missing
-   cmake ..
+   cmake .. -DCMAKE_BUILD_TYPE=Release
    cmake --build .
    cd bin
    ./timer
@@ -26,7 +26,7 @@ consumer_debug() {
    mkdir -p build
    cd build
    conan install .. -s build_type=Debug
-   cmake ..
+   cmake .. -DCMAKE_BUILD_TYPE=Debug
    cmake --build .
    conan search
    conan search zlib/1.2.8@lasote/stable
