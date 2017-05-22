@@ -1,0 +1,10 @@
+{
+  "key": "automation-gradle-release-local",
+  "rclass" : "local",
+  "packageType": "gradle",
+  "description": "Ready for production release Framework Repository",
+  "notes": "SwampUp Automation Training",
+  "includesPattern": "**/*",
+  "excludesPattern": "",
+  "repoLayoutRef" : "simple-default"
+}

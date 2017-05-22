@@ -2,14 +2,17 @@
 
 RED='\033[0;41;30m'
 STD='\033[0;0;39m'
+# change per student
 APIKEY='AKCp2WWshJKjZjguhB3vD2u3RMwHA7gmxWUohWVhs1FqacHBAzKaiL2pp24NNUEhWHm5Dd4JY'
 
 exercise1() {
    echo "performing exercise 1"
    cd $HOME/swampup/automation/docker-framework
-   curl -H "X-JFrog-Art-Api:${APIKEY}" -H "Content-Type:application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -X PUT "http://jfrog.local/artifactory/api/repositories/automation-docker-prod-local.json" -T automation-docker-prod-local.json
+# make sure student change /etc/hosts on the VM with jfrog.local and the IP address from Orbitera. 
+   curl -H "X-JFrog-Art-Api:${APIKEY}" -H "Content-Type:application/vnd.org.jfrog.artifactory.repositories.LocalRepositoryConfiguration+json" -X PUT "http://jfrog.local/artifactory/api/repositories/automation-gradle-release-local" -T automation-gradle-release-local.json
    cd tomcat
    jfrog rt c clear
+# Change password per student
    jfrog rt c swampup-automation --url=http://jfrog.local:8084/artifactory --user=admin --password=password
    jfrog rt c artifactory-ha --url=http://jfrog.local/artifactory --user=admin --password=password
    jfrog rt dl --server-id=swampup-automation --spec framework-download.json
