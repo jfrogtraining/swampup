@@ -28,9 +28,7 @@ read_options(){
         read -p "Enter choice [ 1 - 4] " choice
         case $choice in
                 1) exercise1 ;;
-                2) exercise2 ;;
-                3) exrecise3 ;;
-                4) exit 0 ;;
+                2) exit 0 ;;
                 *) echo -e "${RED}Error...${STD}" && sleep 2
         esac
 }
@@ -41,9 +39,7 @@ show_menus() {
         echo " Automation Catch Up Menu "
         echo "~~~~~~~~~~~~~~~~~~~~~~~~~~"
         echo "1. Excercise 1"
-        echo "2. Excercise 2"
-        echo "3. Excercise 3"
-        echo "4. Exit"
+        echo "2. Exit"
 }
 
 while true

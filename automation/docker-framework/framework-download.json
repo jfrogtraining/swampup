@@ -7,9 +7,7 @@
           "$and": [
             {
               "path": {"$match": "java"},
-              "name": {"$match": "jdk-8u91-linux-x64.tar.gz"},
-              "property.key" : {"$match" : "*.alert.topSeverity"},
-              "property.value" : {"$ne" : "Critical"}
+              "name": {"$match": "jdk-8u91-linux-x64.tar.gz"}
             }
           ]
         }
