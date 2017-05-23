@@ -2,7 +2,7 @@
 Automation Training - Swampup Edition
 =====================================
 
-Url Links
+Url Links - substitute the IP address assigned from Orbitera. 
 -----
 ```XML
 [Artifactory Main HA] - http://35.185.192.7/artifactory
@@ -34,21 +34,15 @@ API Documentation Links
 [JFrog CLI] - https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory
 [FileSpec] - https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-UsingFileSpecs
 [Jenkins Aritfactory Plugin - DSL] - https://wiki.jenkins-ci.org/display/JENKINS/Artifactory+-+Working+With+the+Pipeline+Jenkins+Plugin
+[Jenkins Artifactory Pipeline examples] - https://github.com/JFrogDev/project-examples/tree/master/jenkins-pipeline-examples 
 [Aritfactory Query Language] - https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language
+[Aritfactory Client Java] - https://github.com/JFrogDev/artifactory-client-java 
+[Artifactory User Plugin] - https://www.jfrog.com/confluence/display/RTF/User+Plugins
+[Artifactory Public API] - http://repo.jfrog.org/artifactory/oss-releases-local/org/artifactory/artifactory-papi/%5BRELEASE%5D/artifactory-papi-%5BRELEASE%5D-javadoc.jar!/index.html 
+[Artifactory User Plugins on GitHub] - https://github.com/JFrogDev/artifactory-user-plugins
+[Spock test framework for Artifactory User plugin] - http://spockframework.org/spock/docs/1.1/index.html 
 ```
 
-Metadata Used
--------------
-List of metadata used and what are the actionable events
-```XML
-[Security team deploy approved Java JDK and Tomcat: security-approval, approver] - security approvals for downloded packaes.
-[Jenkins(gradle-examle build): unit-test, qa-team] - target qa team to perform tests; QA takes build if unit-test passes
-[Jenkins(docker-framework-build): functional-test] - automated functional test pass, QA team to start testing
-[DockerApp on Automation-docker-prod-local]: qa.manual-test, qa.test-team, qa.jira-tickets] - qa team tesing status and Jira tickets for failed test cases.
-[DockerApp Approval for release: qa.release-approved, qa.approver] - approval for devops to deploy to production
-[Docker App deployment] - DevOps list datacenters where the Docker App has been deployed.
-[XRray - xray metadata] - xRay scan results on deployed artifacts from Jenkins to Artifactory
-```
 
 Excercise 1  - Set Up
 ---------------------
