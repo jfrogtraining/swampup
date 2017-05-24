@@ -42,10 +42,16 @@ API Documentation Links
 [Artifactory User Plugins on GitHub] - https://github.com/JFrogDev/artifactory-user-plugins
 [Spock test framework for Artifactory User plugin] - http://spockframework.org/spock/docs/1.1/index.html 
 ```
-Download Slide 
+Download Slide: Automation
 ---------------
 Click on the below link - 
 https://dl.bintray.com/jfrog/Training-Presentations/Advanced-Automation-With-JFrog-Artifactory.pdf?expiry=1496361600000&id=K8v%2BJBItDfdcU9%2BBa2lxho%2Fg%2FqmA%2F0CR8Tm5UYJ4YeuuqQ1NZiCIC9J6TIMtlTR3fZXLLXsklEZVJG2pjcWZlA%3D%3D&signature=faU6JLBsLILR%2BZr86O9MfFhwNMqQQtuzfAlD2bjDod5Qlk7rxi1eOss7f17ivA0Am0m9w4Zoc%2FZvVkSN4uvKtA%3D%3D
+
+
+Download Slide: Advanced CI
+---------------
+Click the link below --
+https://dl.bintray.com/jfrog/Training-Presentations/Advanced%20CI%20-%20Commit%20to%20deployment%20for%20docker_V2.pdf?expiry=1496361600000&id=K8v%2BJBItDfdcU9%2BBa2lxhh1LiT3lYxM1CXYoDHYbvIjEf%2BFfL5XXjp4U42osv%2BGeSr%2BFhsyA6LA2iq0xjbPIvw%3D%3D&signature=I%2BYTJHgxtX6oAbv094DEb1JwszGXmHeKqVC0aRKe4EsPfERQeFtK1idA0KnWYlnMqckfEXnBOBLsZLg%2FszXUZg%3D%3D
 
 Excercise 1  - Set Up
 ---------------------
