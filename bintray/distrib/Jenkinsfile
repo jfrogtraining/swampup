@@ -35,7 +35,7 @@ node ('master') {
       // Mandatory parameters
       'buildName'             : buildInfo.name,
       'buildNumber'           : buildInfo.number,
-      'targetRepo'            : 'dist-repo',
+      'targetRepo'            : 'swampup-dryrun-2',
         
       // Optional parameters
       'publish'               : true, // Default: true. If true, artifacts are published when deployed to Bintray.
