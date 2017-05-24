@@ -1,0 +1,21 @@
+./prep.sh
+export BT_ORG=<yourOrg>
+jfrog bt stream $BT_ORG
+#Create swamup-dist repo
+## use swampup product
+## save Repo, We will come back and edit later other tabs.
+#GPG key commands
+# gpg --gen-key
+# gpg --list-secret-keys --keyid-format LONG
+# gpg --armor --export 
+# If you have more than one key than specify your key after --export
+# If you GPG complains about it needing more bytes, open a second terminal.
+# sudo find / -type f | xargs grep somerandomstring > /dev/null
+# Copy your GPG key, beginning with -----BEGIN PGP PUBLIC KEY BLOCK----- and ending with -----END PGP PUBLIC KEY BLOCK-----
+# Create Layout:
+##[orgPath]/[module]/[module]-[baseRev]-[architecture<.*>].[ext]
+jfrog bt acc-keys --org=$BT_ORG create swampup-key
+jfrog bt ent --access=r --keys=swampup-key create $BT_ORG/swampup-gen
+jfrog bt ent --access=r --keys=swampup-key create $BT_ORG/swampup-reg
+https://bintray.com/jfrog-int/product/amazing-product/1.0/accept_eula?user=swampup-key@$BT_ORG
+git clone https://github.com/JFrogDev/bintray-scripts.git
