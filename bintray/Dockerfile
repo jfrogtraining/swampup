@@ -1,12 +1,12 @@
-FROM artifactory-us.jfrog.info/busybox
+FROM jfrog.local:5001/busybox
 
 MAINTAINER markg@jfrog.com
 
 ADD jfrog /root/
 
-COPY ./amaze-1.0.tgz /root/
+COPY ./amaze-1.0-x86.tgz /root/
 
-RUN /bin/tar -xvf /root/amaze-1.0.tgz
+RUN /bin/tar -xvf /root/amaze-1.0-86.tgz
 
 RUN mv /exec /root/exec
 
