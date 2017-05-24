@@ -9,7 +9,7 @@ node ('master') {
     buildInfo.env.capture = true
 
     stage('build & deploy') {
-       dir ('swampup/bintray') {
+       dir ('bintray') {
           sh 'prep.sh'
           tagDockerApp = "jfrog.local:5001/swampup-bintray:${env.BUILD_NUMBER}"
           docker.build(tagDockerApp)
