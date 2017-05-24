@@ -1,4 +1,4 @@
-FROM http://35.188.114.255:8084/busybox
+FROM jfrog.local:5001/busybox
 
 MAINTAINER markg@jfrog.com
 
