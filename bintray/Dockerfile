@@ -4,9 +4,9 @@ MAINTAINER markg@jfrog.com
 
 ADD jfrog /root/
 
-COPY ./amaze-1.0-x86.tgz /root/
+COPY ./swampup-bintray-1.0-x86.tgz /root/
 
-RUN /bin/tar -xvf /root/amaze-1.0-86.tgz
+RUN /bin/tar -xvf /root/swampup-bintray-1.0-x86.tgz
 
 RUN mv /exec /root/exec
 
