@@ -1,0 +1,48 @@
+#!/usr/bin/env groovy
+
+node ('master') {
+    git url: 'https://github.com/jfrogtraining/swampup.git'
+    def rtServer = Artifactory.newServer url: "http://jfrog.local/artifactory", credentialsId: CREDENTIALS
+    def buildInfo = Artifactory.newBuildInfo()
+    def tagDockerApp
+    def rtDocker
+    buildInfo.env.capture = true
+
+    stage('build & deploy') {
+       dir ('bintray') {
+          sh './prep.sh'
+          tagDockerApp = "jfrog.local:5001/swampup-bintray:${env.BUILD_NUMBER}"
+          docker.build(tagDockerApp)
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
+                rtDocker.push(tagDockerApp, 'docker-stage-local', buildInfo)
+                rtServer.publishBuildInfo buildInfo
+          }
+	  
+          def uploadSpec = """{
+       	        "files": [
+    	        {
+		    "pattern": "swampup*.*",
+      		    "target":  "generic-local/swampup/swampup-bintray/swampup-bintray-${env.BUILD_NUMBER}-amd64.tgz"
+   	        }
+ 	        ]
+          }"""
+          rtServer.upload(uploadSpec, buildInfo)
+	  }
+    }
+    stage('distribute') {
+      def distributionConfig = [
+      // Mandatory parameters
+      'buildName'             : buildInfo.name,
+      'buildNumber'           : buildInfo.number,
+      'targetRepo'            : 'dist-repo',
+        
+      // Optional parameters
+      'publish'               : true, // Default: true. If true, artifacts are published when deployed to Bintray.
+      'overrideExistingFiles' : false, // Default: false. If true, Artifactory overwrites builds already existing in the target path in Bintray.
+      'async'                 : false, // Default: false. If true, the build will be distributed asynchronously. Errors and warnings may be viewed in the Artifactory log.
+      ]
+      rtServer.distribute distributionConfig
+    }
+	   
+}
