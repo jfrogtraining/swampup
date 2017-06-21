@@ -1,3 +1,5 @@
+package org.jfrog; 
+
 class MyArtifactory implements Serializable {
 
     def server
