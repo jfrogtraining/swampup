@@ -14,6 +14,9 @@ node {
         buildInfo.env.capture = true
 
     stage 'Exec Gradle'
+        if(CLEAN_REPO == "YES") {
+            sh 'rm -rf ~/.gradle/caches'
+        }
         rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
 
     stage 'Publish & Scan'
