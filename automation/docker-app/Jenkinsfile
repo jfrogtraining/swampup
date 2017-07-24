@@ -12,6 +12,7 @@ node ('master') {
         dir ('automation/docker-app') {
             try {
                 println "Gather Released Docker Framework and Gradle War file"
+                sh 'rm -rf war'
                 def downloadAppSpec = readFile "${env.WORKSPACE}/automation/docker-app/appmodules-download.json"
                 rtServer.download(downloadAppSpec, buildInfo )
             } catch (Exception e) {
