@@ -1,4 +1,4 @@
-FROM jfrog.local:5002/ubuntu:latest
+FROM docker-virtual.art-nginx-artifactory-mysql.ocpapps.shikharrawat.com/ubuntu:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
