@@ -1,4 +1,4 @@
-FROM docker-virtual.art-nginx-artifactory-postgresql.ocpapps.shikharrawat.com/ubuntu:latest
+FROM docker-virtual.art-nginx-art-demo.originapps.jfrog.team/ubuntu:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
