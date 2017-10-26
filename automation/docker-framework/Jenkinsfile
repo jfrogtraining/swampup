@@ -62,7 +62,7 @@ node ('master') {
             def gradleWarDownload = """{
             "files": [
                 {
-                  "pattern": "gradle-release-local/org/jfrog/example/gradle/webservice/1.1.1/*.war",
+                  "pattern": "gradle-release-local/org/jfrog/example/gradle/webservice/1.1.2/*.war",
                   "target": "war/webservice.war",
                   "props": "unit-test=pass",
                   "flat": "true"
