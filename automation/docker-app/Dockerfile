@@ -1,4 +1,4 @@
-FROM jfrog.local:5001/docker-framework:latest
+FROM docker.artifactory/docker-framework:latest
 
 MAINTAINER Jainish Shah jainishs@jfrog.com
 
