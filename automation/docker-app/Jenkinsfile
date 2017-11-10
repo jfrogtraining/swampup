@@ -54,14 +54,15 @@ node ('master') {
              def xrayConfig = [
                 'buildName'     : env.JOB_NAME,
                 'buildNumber'   : env.BUILD_NUMBER,
-                'failBuild'     : false
+                'failBuild'     : true
               ]
               def xrayResults = rtServer.xrayScan xrayConfig
               echo xrayResults as String
+              echo 'how am I doing?'
          } else {
               println "No Xray scan performed. To enable set XRAY_SCAN = YES"
          }
-         sleep 60
+//         sleep 60
      }
 
      stage ('promotion') {
