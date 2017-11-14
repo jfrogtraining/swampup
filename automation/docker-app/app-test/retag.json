@@ -1,5 +1,5 @@
 {
-  "targetRepo" : "docker-local",
+  "targetRepo" : "docker-stage-local",
   "dockerRepository" : "docker-app",
   "tag" : "@",
   "targetTag" : "latest",
