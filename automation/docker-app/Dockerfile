@@ -1,4 +1,4 @@
-FROM docker-framework:latest
+FROM docker_repo/docker-framework:latest
 
 MAINTAINER Stanley Fong stanleyf@jfrog.com
 
