@@ -27,7 +27,7 @@ node ('master') {
             tagDockerApp = "${ARTDOCKER_REGISTRY}/docker-app:${env.BUILD_NUMBER}"
             docker.build(tagDockerApp)
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
+                rtDocker = Artifactory.docker server: rtServer
                 rtDocker.push(tagDockerApp, REPO, buildInfo)
                 rtServer.publishBuildInfo buildInfo
              }
