@@ -46,7 +46,7 @@ node ('master') {
     stage('build') {
         dir ('automation/docker-framework') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                    def rtDocker = Artifactory.docker("${env.USERNAME}", "${env.PASSWORD}")
+                    def rtDocker = Artifactory.docker server: rtServer
                     tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
                     docker.build(tagName)
                     rtDocker.push(tagName, REPO, buildInfo)
