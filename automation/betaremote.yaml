@@ -1,0 +1,47 @@
+remoteRepositories:
+  docker-remote:
+      type: docker
+      url: https://registry-1.docker.io
+      repoLayout: simple-default
+      xray:
+        enabled: true
+  helm-remote:
+      type: helm
+      url: https://storage.googleapis.com/kubernetes-charts
+      repoLayout: simple-default
+      xray:
+        enabled: true
+virtualRepositories:
+  gradle-release:
+      type: gradle
+      repositories:
+        - gradle-release-local
+        - jcenter
+        - gradle-prod-local
+      description: "gradle virtual repositories"
+      defaultDeploymentRepo: gradle-release-local
+  docker-virtual:
+      type: docker
+      repositories:
+        - docker-local
+        - docker-remote
+        - docker-dev-local
+        - docker-prod-local
+        - docker-stage-local
+      description: "docker virtual"
+      defaultDeploymentRepo: docker-stage-local
+  libs-release:
+      type: maven
+      repositories:
+        - libs-release-local
+        - jcenter
+      description: "maven libraries virtual"
+      defaultDeploymentRepo: libs-release-local
+  helm-virtual:
+      type: helm
+      repositories:
+        - helm-local
+        - helm-remote
+      description: "helm virtual"
+      defaultDeploymentRepo: helm-local
+
