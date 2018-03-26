@@ -51,4 +51,11 @@ localRepositories:
       description: "generic local"
       xray:
         enabled: true
+  maven-data-local:
+      type: maven
+      repoLayout: maven-2-default
+      description: "maven repo for data generation"
+      xray:
+        enabled: true
+
 
