@@ -34,9 +34,10 @@ virtualRepositories:
       type: maven
       repositories:
         - libs-release-local
+        - maven-release-local
         - jcenter
       description: "maven libraries virtual"
-      defaultDeploymentRepo: libs-release-local
+      defaultDeploymentRepo: maven-release-local
   helm-virtual:
       type: helm
       repositories:
@@ -44,4 +45,11 @@ virtualRepositories:
         - helm-remote
       description: "helm virtual"
       defaultDeploymentRepo: helm-local
+  libs-snapshot:
+      type: maven
+      repositories:
+        - maven-snapshot-local
+        - jcenter
+      description: "maven libraries virtual"
+      defaultDeploymentRepo: maven-snapshot-local
 
