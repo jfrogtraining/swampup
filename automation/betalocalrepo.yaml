@@ -57,5 +57,15 @@ localRepositories:
       description: "maven repo for data generation"
       xray:
         enabled: true
-
-
+  maven-release-local:
+      type: maven
+      repoLayout: maven-2-default
+      description: "maven repo for data generation"
+      xray:
+        enabled: true
+  maven-snapshot-local:
+      type: maven
+      repoLayout: maven-2-default
+      description: "maven repo for data generation"
+      xray:
+        enabled: true
