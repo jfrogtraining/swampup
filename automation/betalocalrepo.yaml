@@ -69,3 +69,9 @@ localRepositories:
       description: "maven repo for data generation"
       xray:
         enabled: true
+  conan-local:
+      type: conan
+      repoLayout: conan-default
+      description: "conan development local"
+      xray:
+        enabled: true
