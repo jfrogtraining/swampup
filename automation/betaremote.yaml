@@ -52,4 +52,13 @@ virtualRepositories:
         - jcenter
       description: "maven libraries virtual"
       defaultDeploymentRepo: maven-snapshot-local
-
+  docker:
+      type: docker
+      repositories:
+        - docker-local
+        - docker-remote
+        - docker-dev-local
+        - docker-prod-local
+        - docker-stage-local
+      description: "docker virtual"
+      defaultDeploymentRepo: docker-stage-local
