@@ -81,3 +81,9 @@ localRepositories:
       description: "debian development local"
       xray:
         enabled: true
+  rpm-dev-local:
+      type: rpm
+      repoLayout: simple-default
+      description: "rpm development local"
+      xray:
+        enabled: true
