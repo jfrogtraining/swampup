@@ -75,3 +75,9 @@ localRepositories:
       description: "conan development local"
       xray:
         enabled: true
+  debian-dev-local:
+      type: debian
+      repoLayout: simple-default
+      description: "debian development local"
+      xray:
+        enabled: true
