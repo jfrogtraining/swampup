@@ -82,7 +82,7 @@ localRepositories:
       xray:
         enabled: true
   rpm-dev-local:
-      type: rpm
+      type: yum
       repoLayout: simple-default
       description: "rpm development local"
       xray:
