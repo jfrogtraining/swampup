@@ -87,3 +87,13 @@ localRepositories:
       description: "rpm development local"
       xray:
         enabled: true
+  au-gradle-release-local:
+      type: gradle
+      description: "au release build"
+      xray:
+        enabled: true
+  au-gradle-prod-local:
+      type: gradle
+      description: "au product build"
+      xray:
+        enabled: true
