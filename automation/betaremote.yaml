@@ -61,4 +61,4 @@ virtualRepositories:
         - docker-prod-local
         - docker-stage-local
       description: "docker virtual"
-      defaultDeploymentRepo: docker-stage-local
+      defaultDeploymentRepo: docker-prod-local
