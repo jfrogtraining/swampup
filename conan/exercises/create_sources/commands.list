@@ -1,0 +1,7 @@
+##Exercise 6
+conan new Hello/1.0@myuser/testing
+conan create . Hello/1.0@myuser/testing
+conan create –s build_type=Debug . Hello/1.0@myuser/testing
+##Exercise 7
+conan upload "Hello*" -r artifactory --all
+cd ../profile_arm
