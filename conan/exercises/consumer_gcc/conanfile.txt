@@ -1,6 +1,6 @@
 [requires]
-Boost/1.60.0@lasote/stable
-Poco/1.7.2@lasote/stable
+boost/1.67.0@conan/stable
+Poco/1.9.0@pocoproject/stable
 
 [generators]
 cmake
