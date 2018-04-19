@@ -53,7 +53,7 @@ create_sources() {
    echo "performing Exercise 6 (Create Package with sources)"
    cd create_sources
    conan new Hello/1.0@myuser/testing -t --source
-   conan test_package
+   conan create . Hello/1.0@myuser/testing
 }
 
 upload_artifactory() {

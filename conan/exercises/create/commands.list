@@ -1,2 +1,4 @@
-conan new Hello/1.0@myuser/testing
+##Exercise 5:
+conan new Hello/1.0@myuser/testing -t --source
 conan create . Hello/1.0@myuser/testing
+cd ../create_sources
