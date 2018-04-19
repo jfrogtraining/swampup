@@ -1,0 +1,11 @@
+##BEFORE YOU GET HERE
+ssh admin@ORBITERAIP
+git clone https://github.com/jfrogtraining/swampup.git
+cd swampup/conan
+##START COMMANDS HERE
+export ORBITERAIP="<insert IP>"
+conan remote add -i 0 artifactory http://ORBITERAIP/artifactory/api/conan/conan-local
+conan remote list
+conan remote remove conan-center
+conan remote list
+cd exercises/consumer
