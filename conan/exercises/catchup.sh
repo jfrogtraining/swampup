@@ -29,7 +29,7 @@ consumer_debug() {
    cmake .. -DCMAKE_BUILD_TYPE=Debug
    cmake --build .
    conan search
-   conan search zlib/1.2.8@lasote/stable
+   conan search zlib/1.2.11@conan/stable
 }
 
 consumer_gcc() {
