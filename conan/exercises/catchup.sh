@@ -46,7 +46,7 @@ create() {
    echo "performing Exercise 5 (Create a Conan Package)"
    cd create
    conan new Hello/1.0@myuser/testing -t
-   conan test_package
+   conan create . Hello/1.0@myuser/testing
 }
 
 create_sources() {

@@ -1,0 +1,2 @@
+conan new Hello/1.0@myuser/testing
+conan create . Hello/1.0@myuser/testing
