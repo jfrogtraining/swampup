@@ -1,3 +1,6 @@
 [requires]
-hello/1.0@lasote/testing
+Hello/0.1@user/testing
+
+[generators]
+cmake
 
