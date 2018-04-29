@@ -14,6 +14,7 @@ class HelloConan(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
+        self.run("bin/runUnitTests")
 
     def package(self):
         self.copy("*.h", dst="include")
