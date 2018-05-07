@@ -1,0 +1,7 @@
+{
+  "description" : "for swampup 2018",
+  "autoJoin" : false,
+  "realm" : "ldap",
+  "realmAttributes" : "ldapGroupName=swampadmin;groupsStrategy=STATIC;groupDn=cn=swampadmin,ou=Groups,dc=jfrog,dc=com",
+  "adminPrivileges" : true
+}

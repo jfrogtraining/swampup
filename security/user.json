@@ -1,0 +1,7 @@
+{   
+    "email" : "<provideEmail>",
+    "password": "<providePassword>",
+    "admin": false,
+    "profileUpdatable": true,
+    "groups" : [ "readers","dev-team" ]
+}
