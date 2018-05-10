@@ -1,6 +1,0 @@
-#Exercise 4:
-#Edit conanfile.txt (vi, nano or emacs) replace cmake with gcc
-conan install .
-g++ timer.cpp @conanbuildinfo.gcc -o timer --std=c++11
-./timer
-cd ../create
