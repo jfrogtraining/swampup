@@ -1,8 +1,0 @@
-##Exercise 8
-cat arm_gcc_debug.profile
-mkdir build
-cd build
-## FROM HERE ON CONTINUE IN BUILD DIRECTORY!
-conan install .. --profile ../arm_gcc_debug.profile
-#above step fails.  Try with:
-conan install .. --profile ../arm_gcc_debug.profile --build missing
