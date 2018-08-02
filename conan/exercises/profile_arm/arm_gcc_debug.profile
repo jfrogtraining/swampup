@@ -1,7 +1,7 @@
 [settings]
 os=Linux
 compiler=gcc
-compiler.version=6
+compiler.version=4.9
 compiler.libcxx=libstdc++
 build_type=Debug
 arch=armv7
